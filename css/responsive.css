@@ -1,0 +1,668 @@
+/* 夸克网盘转存工具 - 响应式样式文件 */
+
+/* 超大屏幕优化 (2560px+) */
+@media (min-width: 2560px) {
+    :root {
+        --quark-sidebar-width: 280px;
+        --quark-logs-width: 400px;
+        --quark-font-size-base: 16px;
+        --quark-font-size-lg: 20px;
+        --quark-font-size-xl: 24px;
+        --quark-spacing-xl: 48px;
+    }
+
+    .quark-gui-panel {
+        max-width: 1400px;
+        margin: var(--quark-spacing-xl) auto;
+    }
+}
+
+/* 大屏幕优化 (1440px - 2559px) */
+@media (min-width: 1440px) and (max-width: 2559px) {
+    :root {
+        --quark-sidebar-width: 240px;
+        --quark-logs-width: 360px;
+    }
+
+    .quark-gui-panel {
+        max-width: 1200px;
+        margin: var(--quark-spacing-lg) auto;
+    }
+}
+
+/* 平板设备 (768px - 1024px) */
+@media (max-width: 1024px) {
+    :root {
+        --quark-logs-width: 250px;
+        --quark-sidebar-width: 180px;
+    }
+
+    .quark-gui-header-content {
+        padding: 0 var(--quark-spacing-md);
+    }
+
+    .quark-gui-title {
+        font-size: var(--quark-font-size-lg);
+    }
+
+    .quark-gui-content {
+        padding: var(--quark-spacing-md);
+    }
+
+    .quark-gui-panel {
+        padding: var(--quark-spacing-md);
+    }
+    
+    .quark-gui-logs-content {
+        font-size: var(--quark-font-size-sm);
+        max-height: calc(100vh - var(--quark-header-height) - var(--quark-footer-height) - 100px);
+    }
+    
+    .quark-gui-toolbar {
+        flex-direction: column;
+        gap: var(--quark-spacing-md);
+        align-items: stretch;
+        padding: var(--quark-spacing-md);
+    }
+
+    .quark-gui-search-group {
+        max-width: none;
+        flex-direction: column;
+        gap: var(--quark-spacing-sm);
+    }
+
+    .quark-gui-toolbar-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: var(--quark-spacing-sm);
+    }
+
+    .quark-gui-form-actions {
+        flex-wrap: wrap;
+        gap: var(--quark-spacing-sm);
+    }
+
+    .quark-gui-progress-steps {
+        flex-wrap: wrap;
+        gap: var(--quark-spacing-md);
+        justify-content: center;
+    }
+
+    .quark-gui-step {
+        min-width: 120px;
+        flex: 1;
+        max-width: 200px;
+    }
+
+    /* 表格容器优化 */
+    .quark-gui-table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: var(--quark-border-radius);
+        box-shadow: var(--quark-shadow-sm);
+        margin: var(--quark-spacing-md) 0;
+    }
+
+    .quark-gui-table {
+        min-width: 800px;
+        width: 100%;
+    }
+}
+
+/* 小平板和大手机 (480px - 768px) */
+@media (max-width: 768px) {
+    :root {
+        --quark-header-height: 50px;
+        --quark-sidebar-width: 160px;
+        --quark-logs-width: 200px;
+        --quark-footer-height: 35px;
+    }
+    
+    .quark-gui-header-content {
+        padding: 0 var(--quark-spacing-sm);
+    }
+    
+    .quark-gui-title {
+        font-size: var(--quark-font-size-base);
+    }
+    
+    .quark-gui-title .quark-gui-icon {
+        font-size: var(--quark-font-size-lg);
+    }
+    
+    .quark-gui-header-actions {
+        gap: var(--quark-spacing-xs);
+    }
+    
+    .quark-gui-header-actions .quark-gui-btn {
+        padding: var(--quark-spacing-xs) var(--quark-spacing-sm);
+        font-size: var(--quark-font-size-sm);
+    }
+    
+    .quark-gui-nav-btn {
+        padding: var(--quark-spacing-sm) var(--quark-spacing-md);
+        font-size: var(--quark-font-size-sm);
+    }
+    
+    .quark-gui-content {
+        padding: var(--quark-spacing-sm);
+    }
+    
+    .quark-gui-panel {
+        padding: var(--quark-spacing-sm);
+    }
+    
+    .quark-gui-panel-header h2 {
+        font-size: var(--quark-font-size-lg);
+    }
+    
+    .quark-gui-logs-header {
+        padding: var(--quark-spacing-sm) var(--quark-spacing-md);
+    }
+    
+    .quark-gui-logs-header h3 {
+        font-size: var(--quark-font-size-base);
+    }
+    
+    .quark-gui-logs-content {
+        padding: var(--quark-spacing-sm);
+        max-height: calc(100vh - var(--quark-header-height) - var(--quark-footer-height) - 100px);
+    }
+    
+    .quark-gui-footer {
+        padding: 0 var(--quark-spacing-sm);
+        font-size: var(--quark-font-size-sm);
+    }
+    
+    .quark-gui-status {
+        gap: var(--quark-spacing-md);
+    }
+    
+    .quark-gui-table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: var(--quark-border-radius);
+        margin: var(--quark-spacing-md) 0;
+    }
+
+    .quark-gui-table {
+        min-width: 700px;
+        font-size: var(--quark-font-size-sm);
+    }
+
+    .quark-gui-table th,
+    .quark-gui-table td {
+        padding: var(--quark-spacing-sm);
+        font-size: var(--quark-font-size-sm);
+        white-space: nowrap;
+    }
+
+    /* 表格操作列优化 */
+    .quark-gui-table-actions {
+        display: flex;
+        flex-direction: column;
+        gap: var(--quark-spacing-xs);
+        min-width: 100px;
+    }
+
+    .quark-gui-table-actions .quark-gui-btn {
+        font-size: var(--quark-font-size-sm);
+        padding: var(--quark-spacing-xs) var(--quark-spacing-sm);
+        min-height: 32px;
+    }
+
+    .quark-gui-modal-content {
+        width: calc(100vw - 32px);
+        max-width: 500px;
+        margin: 5vh auto;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .quark-gui-modal-header,
+    .quark-gui-modal-body,
+    .quark-gui-modal-footer {
+        padding: var(--quark-spacing-md);
+    }
+
+    .quark-gui-modal-footer {
+        display: flex;
+        flex-direction: column;
+        gap: var(--quark-spacing-sm);
+    }
+
+    .quark-gui-modal-footer .quark-gui-btn {
+        width: 100%;
+        min-height: 44px;
+    }
+    
+    .quark-gui-settings-section {
+        padding: var(--quark-spacing-md);
+    }
+    
+    .quark-gui-progress-steps {
+        flex-direction: column;
+        gap: var(--quark-spacing-sm);
+    }
+    
+    .quark-gui-step {
+        flex-direction: row;
+        text-align: left;
+        min-width: auto;
+    }
+    
+    .quark-gui-step-icon {
+        margin-right: var(--quark-spacing-sm);
+        margin-bottom: 0;
+    }
+}
+
+/* 手机设备 (320px - 480px) */
+@media (max-width: 480px) {
+    :root {
+        --quark-sidebar-width: 0;
+        --quark-logs-width: 0;
+        --quark-spacing-xs: 2px;
+        --quark-spacing-sm: 4px;
+        --quark-spacing-md: 8px;
+        --quark-spacing-lg: 12px;
+        --quark-spacing-xl: 16px;
+    }
+    
+    .quark-gui-main {
+        flex-direction: column;
+    }
+    
+    .quark-gui-sidebar {
+        display: none;
+    }
+    
+    .quark-gui-logs {
+        display: none;
+    }
+    
+    .quark-gui-content {
+        width: 100%;
+        padding: var(--quark-spacing-sm);
+    }
+    
+    .quark-gui-header-content {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--quark-spacing-sm);
+        padding: var(--quark-spacing-sm);
+        height: var(--quark-header-height);
+        flex-wrap: nowrap;
+    }
+
+    .quark-gui-title {
+        font-size: var(--quark-font-size-sm);
+        flex: 1;
+        min-width: 0;
+        text-align: left;
+    }
+
+    .quark-gui-header-actions {
+        display: flex;
+        gap: var(--quark-spacing-xs);
+        flex-shrink: 0;
+    }
+
+    .quark-gui-header-actions .quark-gui-btn {
+        min-width: 36px;
+        padding: var(--quark-spacing-xs);
+        font-size: var(--quark-font-size-sm);
+    }
+    
+    .quark-gui-panel {
+        padding: var(--quark-spacing-sm);
+        border-radius: var(--quark-border-radius);
+    }
+    
+    .quark-gui-panel-header {
+        text-align: center;
+        margin-bottom: var(--quark-spacing-md);
+    }
+    
+    .quark-gui-panel-header h2 {
+        font-size: var(--quark-font-size-base);
+    }
+    
+    .quark-gui-form-group {
+        margin-bottom: var(--quark-spacing-md);
+    }
+    
+    .quark-gui-form-actions {
+        flex-direction: column;
+        gap: var(--quark-spacing-sm);
+    }
+    
+    .quark-gui-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .quark-gui-toolbar {
+        padding: var(--quark-spacing-sm);
+    }
+    
+    .quark-gui-toolbar-actions {
+        flex-wrap: wrap;
+    }
+    
+    .quark-gui-table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: var(--quark-spacing-sm) 0;
+    }
+
+    .quark-gui-table {
+        min-width: 600px;
+        font-size: var(--quark-font-size-sm);
+    }
+
+    .quark-gui-table th,
+    .quark-gui-table td {
+        padding: var(--quark-spacing-xs) var(--quark-spacing-sm);
+        font-size: var(--quark-font-size-sm);
+    }
+
+    .quark-gui-table .quark-gui-table-actions {
+        flex-direction: column;
+        gap: 2px;
+        min-width: 80px;
+    }
+
+    .quark-gui-table-actions .quark-gui-btn {
+        font-size: var(--quark-font-size-sm);
+        padding: 2px var(--quark-spacing-xs);
+        min-height: 28px;
+    }
+
+    .quark-gui-pagination {
+        flex-direction: column;
+        gap: var(--quark-spacing-sm);
+        align-items: center;
+        padding: var(--quark-spacing-md);
+    }
+
+    .quark-gui-pagination-info {
+        order: 1;
+        text-align: center;
+        margin-bottom: var(--quark-spacing-sm);
+    }
+
+    .quark-gui-pagination-controls {
+        order: 2;
+        display: flex;
+        gap: var(--quark-spacing-xs);
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .quark-gui-footer {
+        flex-direction: column;
+        gap: var(--quark-spacing-xs);
+        text-align: center;
+        height: auto;
+        min-height: var(--quark-footer-height);
+        padding: var(--quark-spacing-sm);
+    }
+    
+    .quark-gui-status {
+        flex-direction: column;
+        gap: var(--quark-spacing-xs);
+    }
+    
+    .quark-gui-modal-content {
+        width: 98%;
+        margin: var(--quark-spacing-xs);
+        max-height: 95vh;
+    }
+    
+    .quark-gui-modal-header,
+    .quark-gui-modal-body,
+    .quark-gui-modal-footer {
+        padding: var(--quark-spacing-sm);
+    }
+    
+    .quark-gui-modal-footer {
+        flex-direction: column;
+    }
+    
+    .quark-gui-settings-section {
+        padding: var(--quark-spacing-sm);
+        margin-bottom: var(--quark-spacing-md);
+    }
+    
+    .quark-gui-progress-section {
+        padding: var(--quark-spacing-sm);
+    }
+    
+    .quark-gui-result-section {
+        padding: var(--quark-spacing-sm);
+    }
+    
+    .quark-gui-result-item {
+        flex-direction: column;
+        text-align: center;
+        padding: var(--quark-spacing-sm);
+    }
+    
+    .quark-gui-result-icon {
+        margin-right: 0;
+        margin-bottom: var(--quark-spacing-xs);
+    }
+    
+    .quark-gui-result-actions {
+        flex-direction: column;
+        width: 100%;
+        margin-top: var(--quark-spacing-sm);
+    }
+    
+    .quark-gui-notification {
+        top: var(--quark-spacing-sm);
+        right: var(--quark-spacing-sm);
+        left: var(--quark-spacing-sm);
+        max-width: none;
+    }
+    
+    /* 移动端导航 */
+    .quark-gui-mobile-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--quark-bg-primary);
+        border-top: 1px solid var(--quark-border-color);
+        display: flex;
+        justify-content: space-around;
+        padding: var(--quark-spacing-sm);
+        z-index: 100;
+    }
+    
+    .quark-gui-mobile-nav-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: none;
+        border: none;
+        padding: var(--quark-spacing-xs);
+        color: var(--quark-text-secondary);
+        font-size: var(--quark-font-size-sm);
+        cursor: pointer;
+        border-radius: var(--quark-border-radius);
+        transition: all 0.2s ease;
+    }
+    
+    .quark-gui-mobile-nav-btn.active {
+        color: var(--quark-primary-color);
+        background: rgba(24, 144, 255, 0.1);
+    }
+    
+    .quark-gui-mobile-nav-btn .quark-gui-icon {
+        font-size: var(--quark-font-size-lg);
+        margin-bottom: 2px;
+    }
+    
+    /* 为移动端底部导航留出空间 */
+    .quark-gui-app {
+        padding-bottom: 60px;
+    }
+}
+
+/* 超小屏幕 (< 320px) */
+@media (max-width: 320px) {
+    :root {
+        --quark-font-size-sm: 10px;
+        --quark-font-size-base: 12px;
+        --quark-font-size-lg: 14px;
+        --quark-font-size-xl: 16px;
+        --quark-font-size-xxl: 18px;
+    }
+    
+    .quark-gui-header-content {
+        padding: var(--quark-spacing-xs);
+    }
+    
+    .quark-gui-content {
+        padding: var(--quark-spacing-xs);
+    }
+    
+    .quark-gui-panel {
+        padding: var(--quark-spacing-xs);
+    }
+    
+    .quark-gui-modal-content {
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        max-height: 100vh;
+    }
+    
+    .quark-gui-table {
+        min-width: 400px;
+    }
+    
+    .quark-gui-notification {
+        top: 0;
+        right: 0;
+        left: 0;
+        border-radius: 0;
+    }
+}
+
+/* 横屏模式优化 */
+@media (orientation: landscape) and (max-height: 500px) {
+    .quark-gui-header {
+        height: 40px;
+    }
+    
+    .quark-gui-footer {
+        height: 30px;
+    }
+    
+    .quark-gui-modal-content {
+        max-height: 90vh;
+    }
+    
+    .quark-gui-panel {
+        min-height: auto;
+    }
+}
+
+/* 高分辨率屏幕优化 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .quark-gui-table {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+    
+    .quark-gui-table th,
+    .quark-gui-table td {
+        border-bottom: 0.5px solid var(--quark-border-light);
+    }
+}
+
+/* 打印样式 */
+@media print {
+    .quark-gui-header,
+    .quark-gui-sidebar,
+    .quark-gui-logs,
+    .quark-gui-footer,
+    .quark-gui-modal,
+    .quark-gui-notification {
+        display: none !important;
+    }
+    
+    .quark-gui-main {
+        flex-direction: column;
+    }
+    
+    .quark-gui-content {
+        width: 100%;
+        padding: 0;
+    }
+    
+    .quark-gui-panel {
+        box-shadow: none;
+        border: 1px solid #000;
+        page-break-inside: avoid;
+    }
+    
+    .quark-gui-table {
+        border: 1px solid #000;
+    }
+    
+    .quark-gui-table th,
+    .quark-gui-table td {
+        border: 1px solid #000;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+}
+
+/* 无障碍访问优化 */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --quark-text-primary: #ffffff;
+        --quark-text-secondary: #d9d9d9;
+        --quark-text-disabled: #595959;
+        
+        --quark-bg-primary: #1f1f1f;
+        --quark-bg-secondary: #141414;
+        --quark-bg-tertiary: #262626;
+        --quark-bg-hover: #303030;
+        
+        --quark-border-color: #434343;
+        --quark-border-light: #303030;
+    }
+    
+    .quark-gui-log-info {
+        background: #162312;
+        border-left-color: var(--quark-success-color);
+    }
+    
+    .quark-gui-log-warning {
+        background: #2b2111;
+        border-left-color: var(--quark-warning-color);
+    }
+    
+    .quark-gui-log-error {
+        background: #2a1215;
+        border-left-color: var(--quark-error-color);
+    }
+}

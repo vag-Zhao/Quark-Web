@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>夸克网盘转存工具 - Web版</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="quark-gui-app" id="quarkApp">
+        <!-- 顶部标题栏 -->
+        <header class="quark-gui-header">
+            <div class="quark-gui-header-content">
+                <h1 class="quark-gui-title">
+                    <span class="quark-gui-icon">📁</span>
+                    夸克网盘转存工具
+                </h1>
+                <div class="quark-gui-header-actions">
+                    <button class="quark-gui-btn quark-gui-btn-icon" id="themeToggle" title="切换主题">
+                        <span class="quark-gui-theme-icon">🌙</span>
+                    </button>
+                    <button class="quark-gui-btn quark-gui-btn-secondary" id="proxyBtn">
+                        <span class="quark-gui-icon">🌐</span>
+                        代理
+                    </button>
+                    <button class="quark-gui-btn quark-gui-btn-secondary" id="settingsBtn">
+                        <span class="quark-gui-icon">⚙️</span>
+                        设置
+                    </button>
+                    <button class="quark-gui-btn quark-gui-btn-secondary" id="aboutBtn">
+                        <span class="quark-gui-icon">ℹ️</span>
+                        关于
+                    </button>
+                    <button class="quark-gui-btn quark-gui-btn-secondary" id="logToggleBtn">
+                        <span class="quark-gui-icon">📋</span>
+                        日志
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="quark-gui-main">
+            <!-- 左侧导航 -->
+            <nav class="quark-gui-sidebar">
+                <ul class="quark-gui-nav-list">
+                    <li class="quark-gui-nav-item">
+                        <button class="quark-gui-nav-btn active" data-panel="transfer">
+                            <span class="quark-gui-icon">📤</span>
+                            文件转存
+                        </button>
+                    </li>
+                    <li class="quark-gui-nav-item">
+                        <button class="quark-gui-nav-btn" data-panel="files">
+                            <span class="quark-gui-icon">📋</span>
+                            文件列表
+                        </button>
+                    </li>
+                    <li class="quark-gui-nav-item">
+                        <button class="quark-gui-nav-btn" data-panel="search">
+                            <span class="quark-gui-icon">🔍</span>
+                            资料获取
+                        </button>
+                    </li>
+                    <li class="quark-gui-nav-item">
+                        <button class="quark-gui-nav-btn" data-panel="settings">
+                            <span class="quark-gui-icon">⚙️</span>
+                            设置管理
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- 中间内容区域 -->
+            <div class="quark-gui-content">
+                <!-- 转存面板 -->
+                <div class="quark-gui-panel active" id="transferPanel">
+                    <div class="quark-gui-panel-header">
+                        <h2>文件转存</h2>
+                        <p>从夸克网盘分享链接转存文件到个人网盘</p>
+                    </div>
+                    
+                    <div class="quark-gui-form-group">
+                        <label for="shareUrl">分享链接</label>
+                        <input
+                            type="url"
+                            id="shareUrl"
+                            class="quark-gui-input"
+                            placeholder="请输入夸克网盘分享链接，如：https://pan.quark.cn/s/xxxxxxxxx"
+                        >
+                        <small class="quark-gui-help-text">支持夸克网盘分享链接格式</small>
+                    </div>
+
+                    <div class="quark-gui-form-group">
+                        <div class="quark-gui-batch-header">
+                            <label for="batchInput">批量转存文本</label>
+                            <button type="button" class="quark-gui-btn-clear" id="clearBatchBtn" title="清空批量输入">
+                                <span class="quark-gui-icon">🗑️</span>
+                            </button>
+                        </div>
+                        <textarea
+                            id="batchInput"
+                            class="quark-gui-textarea quark-gui-batch-textarea"
+                            placeholder="粘贴包含多个夸克网盘链接的文本，系统将自动识别并批量转存"
+                            rows="6"
+                        ></textarea>
+                        <div class="quark-gui-batch-info">
+                            <small class="quark-gui-help-text">支持自动识别文本中的夸克网盘链接</small>
+                            <span class="quark-gui-link-counter" id="linkCounter">识别到 0 个链接</span>
+                        </div>
+                        <div class="quark-gui-link-preview" id="linkPreview" style="display: none;">
+                            <h4>识别到的链接：</h4>
+                            <ul id="linkList"></ul>
+                        </div>
+                    </div>
+
+                    <div class="quark-gui-form-actions">
+                        <button class="quark-gui-btn quark-gui-btn-primary" id="transferBtn">
+                            <span class="quark-gui-icon">🚀</span>
+                            开始转存
+                        </button>
+                        <button class="quark-gui-btn quark-gui-btn-secondary" id="clearBtn">
+                            <span class="quark-gui-icon">🗑️</span>
+                            清空
+                        </button>
+                    </div>
+
+                    <!-- 进度显示 -->
+                    <div class="quark-gui-progress-section" id="progressSection" style="display: none;">
+                        <div class="quark-gui-progress-header">
+                            <h3>转存进度</h3>
+                            <span class="quark-gui-progress-status" id="progressStatus">准备中...</span>
+                        </div>
+                        <div class="quark-gui-progress-bar">
+                            <div class="quark-gui-progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="quark-gui-progress-steps" id="progressSteps">
+                            <div class="quark-gui-step">
+                                <span class="quark-gui-step-icon">1</span>
+                                <span class="quark-gui-step-text">解析链接</span>
+                            </div>
+                            <div class="quark-gui-step">
+                                <span class="quark-gui-step-icon">2</span>
+                                <span class="quark-gui-step-text">获取令牌</span>
+                            </div>
+                            <div class="quark-gui-step">
+                                <span class="quark-gui-step-icon">3</span>
+                                <span class="quark-gui-step-text">获取详情</span>
+                            </div>
+                            <div class="quark-gui-step">
+                                <span class="quark-gui-step-icon">4</span>
+                                <span class="quark-gui-step-text">执行转存</span>
+                            </div>
+                            <div class="quark-gui-step">
+                                <span class="quark-gui-step-icon">5</span>
+                                <span class="quark-gui-step-text">生成分享</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 结果显示 -->
+                    <div class="quark-gui-result-section" id="resultSection" style="display: none;">
+                        <div class="quark-gui-result-header">
+                            <h3>转存结果</h3>
+                        </div>
+                        <div class="quark-gui-result-content" id="resultContent">
+                            <!-- 结果内容将通过JavaScript动态填充 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 文件列表面板 -->
+                <div class="quark-gui-panel" id="filesPanel">
+                    <div class="quark-gui-panel-header">
+                        <h2>文件列表</h2>
+                        <p>查看和管理已转存的文件</p>
+                    </div>
+
+                    <!-- 搜索和过滤 -->
+                    <div class="quark-gui-toolbar">
+                        <div class="quark-gui-search-group">
+                            <input
+                                type="text"
+                                id="searchInput"
+                                class="quark-gui-input"
+                                placeholder="搜索文件名..."
+                            >
+                            <button class="quark-gui-btn quark-gui-btn-secondary" id="searchBtn">
+                                <span class="quark-gui-icon">🔍</span>
+                                搜索
+                            </button>
+                        </div>
+                        <div class="quark-gui-toolbar-actions">
+                            <button class="quark-gui-btn quark-gui-btn-secondary" id="refreshBtn">
+                                <span class="quark-gui-icon">🔄</span>
+                                刷新
+                            </button>
+                            <button class="quark-gui-btn quark-gui-btn-secondary" id="exportBtn">
+                                <span class="quark-gui-icon">📤</span>
+                                导出
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 文件表格 -->
+                    <div class="quark-gui-table-container">
+                        <table class="quark-gui-table" id="filesTable">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="selectAll">
+                                    </th>
+                                    <th>文件名</th>
+                                    <th>分享链接</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="filesTableBody">
+                                <!-- 文件列表将通过JavaScript动态填充 -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 分页 -->
+                    <div class="quark-gui-pagination" id="pagination">
+                        <button class="quark-gui-btn quark-gui-btn-secondary" id="prevPage">上一页</button>
+                        <span class="quark-gui-page-info" id="pageInfo">第 1 页，共 1 页</span>
+                        <button class="quark-gui-btn quark-gui-btn-secondary" id="nextPage">下一页</button>
+                    </div>
+                </div>
+
+                <!-- 资料获取面板 -->
+                <div class="quark-gui-panel" id="searchPanel">
+                    <div class="quark-gui-panel-header">
+                        <h2>资料获取</h2>
+                        <p>搜索各大网盘平台的资源并一键转存</p>
+                    </div>
+
+                    <!-- 搜索表单 -->
+                    <div class="quark-gui-search-form">
+                        <div class="quark-gui-form-group">
+                            <label for="searchQuery">搜索关键词</label>
+                            <input
+                                type="text"
+                                id="searchQuery"
+                                class="quark-gui-input"
+                                placeholder="请输入搜索关键词"
+                                required
+                            >
+                        </div>
+
+                        <div class="quark-gui-form-row">
+                            <div class="quark-gui-form-group">
+                                <label for="searchPage">页码</label>
+                                <input
+                                    type="number"
+                                    id="searchPage"
+                                    class="quark-gui-input"
+                                    value="1"
+                                    min="1"
+                                >
+                            </div>
+                            <div class="quark-gui-form-group">
+                                <label for="searchSize">每页数量</label>
+                                <input
+                                    type="number"
+                                    id="searchSize"
+                                    class="quark-gui-input"
+                                    value="10"
+                                    min="1"
+                                    max="100"
+                                >
+                            </div>
+                        </div>
+
+                        <div class="quark-gui-form-row">
+                            <div class="quark-gui-form-group">
+                                <label for="searchTime">时间范围</label>
+                                <select id="searchTime" class="quark-gui-select">
+                                    <option value="">不限制</option>
+                                    <option value="week">一周内</option>
+                                    <option value="month">一个月内</option>
+                                    <option value="three_month">三个月内</option>
+                                    <option value="year">一年内</option>
+                                </select>
+                            </div>
+                            <div class="quark-gui-form-group">
+                                <label for="searchType">资源类型</label>
+                                <select id="searchType" class="quark-gui-select">
+                                    <option value="">不限制</option>
+                                    <option value="BDY">百度云</option>
+                                    <option value="ALY">阿里云</option>
+                                    <option value="QUARK" selected>夸克</option>
+                                    <option value="XUNLEI">迅雷</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="quark-gui-form-group">
+                            <label class="quark-gui-checkbox-label">
+                                <input type="checkbox" id="searchExact">
+                                <span class="quark-gui-checkbox-text">精确搜索</span>
+                            </label>
+                        </div>
+
+                        <div class="quark-gui-form-actions">
+                            <button class="quark-gui-btn quark-gui-btn-primary" id="resourceSearchBtn">
+                                <span class="quark-gui-icon">🔍</span>
+                                开始搜索
+                            </button>
+                            <button class="quark-gui-btn quark-gui-btn-secondary" id="clearSearchBtn">
+                                <span class="quark-gui-icon">🗑️</span>
+                                清空
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 搜索结果 -->
+                    <div class="quark-gui-search-results" id="searchResults" style="display: none;">
+                        <div class="quark-gui-search-results-header">
+                            <h3>搜索结果</h3>
+                            <div class="quark-gui-search-stats" id="searchStats"></div>
+                        </div>
+                        <div class="quark-gui-search-results-content" id="searchResultsContent">
+                            <!-- 搜索结果将通过JavaScript动态填充 -->
+                        </div>
+                        <div class="quark-gui-search-pagination" id="searchPagination">
+                            <button class="quark-gui-btn quark-gui-btn-secondary" id="searchPrevPage">上一页</button>
+                            <span class="quark-gui-page-info" id="searchPageInfo">第 1 页</span>
+                            <button class="quark-gui-btn quark-gui-btn-secondary" id="searchNextPage">下一页</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 设置面板 -->
+                <div class="quark-gui-panel" id="settingsPanel">
+                    <div class="quark-gui-panel-header">
+                        <h2>设置管理</h2>
+                        <p>配置应用参数和管理数据</p>
+                    </div>
+
+                    <!-- Cookie设置 -->
+                    <div class="quark-gui-settings-section">
+                        <div class="quark-gui-section-header">
+                            <h3>Cookie 配置</h3>
+                            <span class="cookie-status-indicator" id="cookieStatusIndicator">
+                                <span class="status-icon">⚪</span>
+                                <span class="status-text">未输入</span>
+                            </span>
+                        </div>
+                        <div class="quark-gui-form-group">
+                            <label for="defaultCookie">默认 Cookie</label>
+                            <textarea 
+                                id="defaultCookie" 
+                                class="quark-gui-textarea" 
+                                placeholder="请输入夸克网盘的Cookie..."
+                                rows="4"
+                            ></textarea>
+                            <small class="quark-gui-help-text">
+                                从浏览器开发者工具 → Network → 请求头中复制完整的Cookie
+                            </small>
+                        </div>
+                        <div class="quark-gui-form-actions">
+                            <button class="quark-gui-btn quark-gui-btn-primary" id="saveCookieBtn">
+                                保存Cookie
+                            </button>
+                            <button class="quark-gui-btn quark-gui-btn-secondary" id="testCookieBtn">
+                                测试Cookie
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 数据管理 -->
+                    <div class="quark-gui-settings-section">
+                        <h3>数据管理</h3>
+                        <div class="quark-gui-form-actions">
+                            <button class="quark-gui-btn quark-gui-btn-secondary" id="importBtn">
+                                <span class="quark-gui-icon">📥</span>
+                                导入数据
+                            </button>
+                            <button class="quark-gui-btn quark-gui-btn-secondary" id="exportDataBtn">
+                                <span class="quark-gui-icon">📤</span>
+                                导出数据
+                            </button>
+                            <button class="quark-gui-btn quark-gui-btn-danger" id="clearDataBtn">
+                                <span class="quark-gui-icon">🗑️</span>
+                                清空数据
+                            </button>
+                        </div>
+                        <input type="file" id="importFile" accept=".json" style="display: none;">
+                    </div>
+
+                    <!-- 应用设置 -->
+                    <div class="quark-gui-settings-section">
+                        <h3>应用设置</h3>
+                        <div class="quark-gui-form-group">
+                            <label>
+                                <input type="checkbox" id="autoSaveEnabled"> 
+                                自动保存转存记录
+                            </label>
+                        </div>
+                        <div class="quark-gui-form-group">
+                            <label>
+                                <input type="checkbox" id="duplicateCheckEnabled"> 
+                                启用重复文件检测
+                            </label>
+                        </div>
+                        <div class="quark-gui-form-group">
+                            <label for="requestTimeout">请求超时时间 (秒)</label>
+                            <input 
+                                type="number" 
+                                id="requestTimeout" 
+                                class="quark-gui-input" 
+                                value="30" 
+                                min="10" 
+                                max="120"
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧日志区域 -->
+            <aside class="quark-gui-logs" id="logsPanel">
+                <div class="quark-gui-logs-header">
+                    <h3>操作日志</h3>
+                    <button class="quark-gui-btn quark-gui-btn-small" id="clearLogsBtn">清空</button>
+                </div>
+                <div class="quark-gui-logs-content" id="logsContent">
+                    <div class="quark-gui-log-item quark-gui-log-info">
+                        <span class="quark-gui-log-time">2024-01-01 12:00:00</span>
+                        <span class="quark-gui-log-message">应用初始化完成</span>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- 底部状态栏 -->
+        <footer class="quark-gui-footer">
+            <div class="quark-gui-status">
+                <span class="quark-gui-status-item">
+                    <span class="quark-gui-icon">📊</span>
+                    已转存: <span id="totalFiles">0</span> 个文件
+                </span>
+                <span class="quark-gui-status-item">
+                    <span class="quark-gui-icon">💾</span>
+                    数据库: <span id="dbStatus">正常</span>
+                </span>
+                <span class="quark-gui-status-item">
+                    <span class="quark-gui-icon">🌐</span>
+                    网络: <span id="networkStatus">在线</span>
+                </span>
+            </div>
+            <div class="quark-gui-version">
+                v1.0.0 - Web版
+            </div>
+        </footer>
+    </div>
+
+    <!-- 模态框 -->
+    <div class="quark-gui-modal" id="modal" style="display: none;">
+        <div class="quark-gui-modal-content">
+            <div class="quark-gui-modal-header">
+                <h3 id="modalTitle">标题</h3>
+                <button class="quark-gui-modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="quark-gui-modal-body" id="modalBody">
+                内容
+            </div>
+            <div class="quark-gui-modal-footer" id="modalFooter">
+                <button class="quark-gui-btn quark-gui-btn-secondary" id="modalCancel">取消</button>
+                <button class="quark-gui-btn quark-gui-btn-primary" id="modalConfirm">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 移动端底部导航 -->
+    <nav class="quark-gui-mobile-nav" id="mobileNav" style="display: none;">
+        <button class="quark-gui-mobile-nav-btn active" data-panel="transfer">
+            <span class="quark-gui-icon">📤</span>
+            <span>转存</span>
+        </button>
+        <button class="quark-gui-mobile-nav-btn" data-panel="files">
+            <span class="quark-gui-icon">📋</span>
+            <span>文件</span>
+        </button>
+        <button class="quark-gui-mobile-nav-btn" data-panel="search">
+            <span class="quark-gui-icon">🔍</span>
+            <span>搜索</span>
+        </button>
+        <button class="quark-gui-mobile-nav-btn" data-panel="settings">
+            <span class="quark-gui-icon">⚙️</span>
+            <span>设置</span>
+        </button>
+        <button class="quark-gui-mobile-nav-btn" id="mobileLogToggle">
+            <span class="quark-gui-icon">📋</span>
+            <span>日志</span>
+        </button>
+    </nav>
+
+    <!-- JavaScript模块 -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
