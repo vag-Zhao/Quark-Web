@@ -5,7 +5,7 @@
 ![Browser](https://img.shields.io/badge/browser-Chrome%20%7C%20Firefox%20%7C%20Safari-green.svg)
 
 基于纯Web技术的夸克网盘文件转存工具，无需安装任何运行环境，直接在浏览器中使用。
-![Uploading 9b5075c9eee7bbf46789ddb330f86d34.png…]()
+![9b5075c9eee7bbf46789ddb330f86d34.png…]()
 
 ## ✨ 特性
 
