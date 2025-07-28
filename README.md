@@ -117,12 +117,6 @@ MIT License - 查看 [LICENSE](LICENSE) 文件了解详情
 3. 提交更改
 4. 发起Pull Request
 
-## 📞 支持
-
-如果遇到问题，请：
-
-- 提交 [Issue](https://github.com/your-username/Quark-GUI/issues)
-- 查看 [Wiki](https://github.com/your-username/Quark-GUI/wiki)
 
 ---
 
